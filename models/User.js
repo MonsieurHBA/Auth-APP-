@@ -1,13 +1,13 @@
-// hedha leli bech ya3mel signup *** bech naamlo New user model
+// import same package
 
 const { model } = require('mongoose');
 const mongoose = require('mongoose') ;
 const bcrypt = require('bcrypt') ;
-const { isEmail } = require('validator') ;  // hedhy function mawjouda fi validator taamlk validation mta3 email
+const { isEmail } = require('validator') ;  
 
 
-// 3malt kifeh el user bech ykoun f data base el model mta3o
 
+// New user ADD
 
 const userSchema = new mongoose.Schema({
     Email: {
@@ -24,24 +24,25 @@ const userSchema = new mongoose.Schema({
     } ,
 })
 
-// appel function ba3ed mansajel new user jdid
+// Schema mongo DB
+
 userSchema.post('save' , (doc , next)=>{
 console.log('New user was created and saved' , doc) ;
 next();
 })
+// crypt password
 
-// appel d'une function 9bal mana3mel new user bech najem n5abi el password
 userSchema.pre('save' , async function(next){       
-    const salt = await bcrypt.genSalt() ;        //  nrakab haja lel password baaed naamelo HAshing
+    const salt = await bcrypt.genSalt() ;        
     this.Password = await bcrypt.hash(this.Password , salt) ;
 next();
 })
 
 // static methos to login user
 userSchema.statics.login = async function(Email , Password) {
-    const user = await this.findOne({ Email }) ; // lawejli 3la email hedha f data base : this ki nabda saye el model 7adher ma5doum
+    const user = await this.findOne({ Email }) ; 
     if(user) {
-        const auth = await bcrypt.compare(Password , user.Password) ; // comparision byn el password eli f data base o eli f input besh naaref naaml login wale
+        const auth = await bcrypt.compare(Password , user.Password) ; // compare old password in data base and new input
         if(auth) {
             return user ;
         }
@@ -50,7 +51,7 @@ userSchema.statics.login = async function(Email , Password) {
     throw Error ('Incorrect Email') ;
 }
 
-// tawa bech na3mel el collection
+//  collection
 
 const User = new mongoose.model('user_pizza' , userSchema ) ;
 
