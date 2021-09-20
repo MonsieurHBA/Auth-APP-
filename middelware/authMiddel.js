@@ -15,7 +15,7 @@ if(err){
     next() ;  
 }
 })
-}else {  // ken famesh token ma3neha login ghalet donc yarja3 lel page login bech y3awed m louel
+}else {  
     res.redirect('/login') ;
 }
    
@@ -32,7 +32,7 @@ const checkUser = (req , res , next) =>{
             }else{
                 console.log(decodedToken)
                 let user = await User.findById(decodedToken.id) ;
-                res.locals.user = user ;   // bech n5arej el id f views
+                res.locals.user = user ;   
                 next() ;  
             }
             })
