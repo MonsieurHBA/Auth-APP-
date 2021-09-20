@@ -34,10 +34,10 @@
                 body: JSON.stringify({Email , Password}),
                 headers: {'Content-Type': 'application/json'}
             })
-            // nheb naffichi eli 3malto  res.status(201).json({user: user._id}) fi AuthController.js ken ta3mal user succes bech ybenli el id f console mtaa front end si nn bech ybeno les erreur eli deja 3malthom ena f AuthController
+           
             const data = await res.json();
             console.log(data) ;
-            // tawa bech n7ot les erreurs fi blayeshom
+           
             if(data.errors) {
                 EmailError.textContent = data.errors.Email ;
                 PasswordError.textContent = data.errors.Password ;
